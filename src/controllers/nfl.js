@@ -10,11 +10,40 @@ function NFLController($scope, rx) {
 
   let calcWinValue = mp => c => mp - c
   let calcLossValue = (a, v) => a - v 
+  let calcReturn = (s, v) => ((((s + v) - s) / s) * 100).toFixed(2)
   let updateSpent = s => $scope.spent = s
 
   let PPW = 10
+  $scope.spent = 0
+
   let selected = []
+  let teams = [
+    { id: 0, name: "DEN", cost: 5 }, 
+    { id: 1, name: "NE",  cost: 5 }, 
+    { id: 2, name: "CIN", cost: 3 }, 
+    { id: 3, name: "HOU", cost: 3 },
+    { id: 4, name: "KC",  cost: 4 }, 
+    { id: 5, name: "PIT", cost: 4 },
+    { id: 6, name: "CAR", cost: 6 },
+    { id: 7, name: "ARZ", cost: 6 }, 
+    { id: 8, name: "WAS", cost: 3 }, 
+    { id: 9, name: "MIN", cost: 3 }, 
+    { id: 10, name: "GB",  cost: 3 }, 
+    { id: 11, name: "SEA", cost: 5 }
+  ]
+
+  let matchups = [
+    [ 0, 5 ],
+    [ 1, 4 ],
+    [ 7, 10 ],
+    [ 6, 11 ]
+  ]
+
   $scope.scores = []
+  $scope.returns = []
+  $scope.teams = teams
+  $scope.matchups = matchups
+  $scope.selected = {}
 
   $scope.isDisabled = function() {
     return selected.length <= 0
@@ -24,6 +53,7 @@ function NFLController($scope, rx) {
     let s = Rx.Observable.from(selected)
     let ts = Rx.Observable.from(teams)
     let ms = Rx.Observable.from(matchups)
+    let spent = Rx.Observable.of($scope.spent)
 
     let sc = s
       .flatMap(i => ts
@@ -73,47 +103,21 @@ function NFLController($scope, rx) {
           )
         )
 
-    spread.toArray().subscribe(console.log.bind(console))
-
-    let spreadProb = spread
-      .flatMap(v => spread.count(x => x == v))
-      .subscribe(console.log.bind(console))
-
     let allValues = Rx.Observable
       .concat(loss.sum(), spread)
       .distinct()
-      .toArray()
+  
+    let returns = spent
+      .tap(console.log.bind(console))
+      .combineLatest(allValues, calcReturn)
+      .tap(console.log.bind(console))
 
-    allValues.subscribe(a => $scope.scores = a)
+
+    returns.subscribe(console.log.bind(console))
+
+    returns.toArray().subscribe(a => $scope.returns = a)
+    allValues.toArray().subscribe(a => $scope.scores = a)
   }
-
-  let teams = [
-    { id: 0, name: "DEN", cost: 5 }, 
-    { id: 1, name: "NE",  cost: 5 }, 
-    { id: 2, name: "CIN", cost: 3 }, 
-    { id: 3, name: "HOU", cost: 3 },
-    { id: 4, name: "KC",  cost: 4 }, 
-    { id: 5, name: "PIT", cost: 4 },
-    { id: 6, name: "CAR", cost: 6 },
-    { id: 7, name: "ARZ", cost: 6 }, 
-    { id: 8, name: "WAS", cost: 3 }, 
-    { id: 9, name: "MIN", cost: 3 }, 
-    { id: 10, name: "GB",  cost: 3 }, 
-    { id: 11, name: "SEA", cost: 5 }
-  ]
-
-  let matchups = [
-    [ 0, 5 ],
-    [ 1, 4 ],
-    [ 7, 10 ],
-    [ 6, 11 ]
-  ]
-
-  $scope.teams = teams
-  $scope.matchups = matchups
-
-  $scope.spent = 0
-  $scope.selected = {}
 
   let accSelected = rx.createObservableFunction($scope, "updateSelected")
     .map(() => {

@@ -2,7 +2,8 @@
   <md-card flex>
     <md-card-title>
       <md-card-title-text>
-        <span class="md-headline">Make Team Selections</span>
+        <div class="md-title">Make Team Selections</div>
+        <div class="md-subhead">Points Total Spent: {{ spent }}</div>
       </md-card-title-text>
     </md-card-title>
     <div layout="row" ng-repeat="matchup in matchups" layout-align="space-around center">
@@ -17,7 +18,6 @@
       </div>
     </div>
     <div layout="column" layout-align="center center" layout-padding>
-      <strong>Points Total Spent: {{ spent }}</strong>
       <md-button class="md-raised md-primary" ng-click="update()" ng-disabled="isDisabled()">
         Show Point Distribution
       </md-button>
@@ -26,13 +26,22 @@
   <md-card class="column" ng-show="scores.length > 0">
     <md-card-title>
       <md-card-title-text>
-        <span class="md-headline">Possible Point Distribution</span>
+        <span class="md-title">Possible Point Distribution</span>
       </md-card-title-text>
     </md-card-title>
+    <md-subheader>Absolute points returned</md-subheader>
     <div layout="row" layout-padding layout-align="space-around center">
       <div flex><strong>Min</strong></div>
       <div flex ng-repeat="score in scores">
         {{ score }}
+      </div>
+      <div flex><strong>Max</strong></div>
+    </div>
+    <md-subheader>Return on points invested</md-subheader>
+    <div layout="row" layout-padding layout-align="space-around center">
+      <div flex><strong>Min</strong></div>
+      <div flex ng-repeat="return in returns">
+        {{ return }}%
       </div>
       <div flex><strong>Max</strong></div>
     </div>
