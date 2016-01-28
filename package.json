@@ -1,0 +1,31 @@
+{
+  "name": "fantasy-empire-toolkit",
+  "version": "1.0.0",
+  "description": "A toolkit for Fantasy Empire calculations",
+  "main": "app.js",
+  "dependencies": {
+    "angular": "^1.4.9",
+    "angular-animate": "^1.4.9",
+    "angular-aria": "^1.4.9",
+    "angular-material": "^1.0.2",
+    "angular-route": "^1.4.9",
+    "rx": "^4.0.7",
+    "rx-angular": "^1.0.4",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-connect": "^2.3.1",
+    "run-sequence": "^1.1.5",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mscmorris@gmail.com",
+  "license": "MIT"
+}
