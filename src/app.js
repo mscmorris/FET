@@ -9,6 +9,7 @@ import "angular-material"
 import "rx-angular"
 
 // Our mods
+import "./filters/filters.js"
 import "./controllers/nfl.js"
 
 let FEApp = angular.module("FEApp", [
@@ -17,6 +18,7 @@ let FEApp = angular.module("FEApp", [
   "ngAnimate", 
   "ngMaterial", 
   "rx", 
+  "FEFilters",
   "NFL"
   ])
 

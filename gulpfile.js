@@ -44,5 +44,5 @@ gulp.task("serve", function() {
 })
 
 gulp.task("default", function(fn) {
-  sequence("clean:dist", "build:html", "build:css", "build:script", "serve", fn)
+  sequence("clean:dist", "build:html", "build:css", "build:script", fn)
 })

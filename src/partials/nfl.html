@@ -6,12 +6,60 @@
         <div class="md-subhead">Points Total Spent: {{ spent }}</div>
       </md-card-title-text>
     </md-card-title>
-    <div layout="row" ng-repeat="matchup in matchups" layout-align="space-around center">
+    <div layout="row" layout-align="space-around center">
       <div flex>
-          <input type="checkbox" ng-click="updateSelected()" class="selection" ng-model="selected[matchup[0]]" />
+        <!-- select -->
       </div>
       <div flex>
-        {{ teams[matchup[0]].name }} vs {{ teams[matchup[1]].name }}
+        Name
+      </div>
+      <div flex>
+        Cost
+      </div>
+      <div flex>
+        Win %
+      </div>
+      <div flex>
+        <!-- vs -->
+      </div>
+      <div flex>
+        <!-- select -->
+      </div>
+      <div flex>
+        Name
+      </div>
+      <div flex>
+        Cost
+      </div>
+      <div flex>
+        Win %
+      </div>
+      <div flex></div>
+    </div>
+    <div layout="row" ng-repeat="matchup in matchups" layout-align="space-around center">
+      <div flex>
+        <input type="checkbox" ng-click="updateSelected()" class="selection" ng-model="selected[matchup[0]]" />
+      </div>
+      <div flex>
+        {{ teams[matchup[0]].name }}
+      </div>
+      <div flex>
+        {{ teams[matchup[0]].cost }}pts
+      </div>
+      <div flex>
+        {{ calcWinPct(teams[matchup[0]].win, teams[matchup[0]].loss) | percentage: 2 }}
+      </div>
+      <div flex>
+        vs
+      </div>
+      <div flex>
+        {{ teams[matchup[1]].name }}
+      </div>
+      <div flex>
+        {{ teams[matchup[1]].cost }}pts
+      </div>
+      <div flex>
+        {{ calcWinPct(teams[matchup[1]].win, teams[matchup[1]].loss) | percentage: 2 }}
       </div>
       <div flex>
         <input type="checkbox" ng-click="updateSelected()" class="selection" ng-model="selected[matchup[1]]" />
@@ -29,21 +77,44 @@
         <span class="md-title">Possible Point Distribution</span>
       </md-card-title-text>
     </md-card-title>
-    <md-subheader>Absolute points returned</md-subheader>
-    <div layout="row" layout-padding layout-align="space-around center">
-      <div flex><strong>Min</strong></div>
-      <div flex ng-repeat="score in scores">
-        {{ score }}
-      </div>
-      <div flex><strong>Max</strong></div>
-    </div>
-    <md-subheader>Return on points invested</md-subheader>
-    <div layout="row" layout-padding layout-align="space-around center">
-      <div flex><strong>Min</strong></div>
-      <div flex ng-repeat="return in returns">
-        {{ return }}%
-      </div>
-      <div flex><strong>Max</strong></div>
-    </div>
+    <table flex style="min-width: 50%; max-width: 100%">
+      <tr>
+        <td></td>
+        <td ng-repeat="score in scores">
+          {{ scores.length === 1 ? "" : $index == 0 ? "Max" : $index == scores.length - 1 ? "Min" : "" }}
+        </td>
+      </tr>
+      <tr>
+        <td><md-subheader>Points Returned</md-subheader></td>
+        <td ng-repeat="score in scores">
+          {{ score }}
+        </td>
+      </tr>
+      <tr>
+        <td><md-subheader>Absolute Points</md-subheader></td>
+        <td ng-repeat="absolute in absolutePoints">
+          {{ absolute }}
+        </td>
+      </tr>
+      <tr>
+        <td><md-subheader>Return/Points Invested</md-subheader></td>
+        <td ng-repeat="return in returns">
+          {{ return }}%
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <md-subheader>
+            Probablity of Result
+            <md-tooltip md-direction="right">
+              This represents the number of combinations in which this result can be achieved
+            </md-tooltip>
+          </md-subheader>
+        </td>
+        <td ng-repeat="probability in probabilities track by $index">
+          {{ probability | percentage: 2 }}
+        </td>
+      </tr>
+    </table>
   </md-card>
 </md-content>
