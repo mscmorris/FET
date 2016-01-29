@@ -38,11 +38,11 @@ gulp.task("build:script", function() {
 gulp.task("serve", function() {
   connect.server({
     root: buildDir,
-    port: 3000,
-    livereload: true
+    port: process.env.port || 3000,
+    livereload: false
   })
 })
 
 gulp.task("default", function(fn) {
-  sequence("clean:dist", "build:html", "build:css", "build:script", fn)
+  sequence("clean:dist", "build:html", "build:css", "build:script", "serve", fn)
 })
