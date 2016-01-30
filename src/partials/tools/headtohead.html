@@ -1,0 +1,13 @@
+<div>
+  <md-input-container class="md-block" flex-gt-sm>
+    <label>Team A</label>
+    <input ng-model="wa">
+  </md-input-container>
+  <md-input-container class="md-block" flex-gt-sm>
+    <label>Team B</label>
+    <input ng-model="wb">
+  </md-input-container>
+  <md-button ng-click="calcResult()">Calculate</md-button>
+
+  <div ng-show="result > 0"> {{ result | percentage: 2 }} </div>
+</div>

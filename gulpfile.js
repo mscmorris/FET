@@ -43,6 +43,26 @@ gulp.task("serve", function() {
   })
 })
 
-gulp.task("default", function(fn) {
+gulp.task("servedev", function() {
+  connect.server({
+    root: buildDir,
+    port: process.env.PORT || 3000,
+    livereload: true
+  })
+})
+
+gulp.task("build:prod", function(fn) {
   sequence("clean:dist", "build:html", "build:css", "build:script", "serve", fn)
+})
+
+gulp.task("default", function(fn) {
+  sequence("clean:dist", "build:html", "build:css", "build:script", "watch", fn)
+})
+
+gulp.task('watch', function() {
+  var watcher = gulp.watch("src/**/*.html", ['build:html'])
+
+  watcher.on('change', function() {
+    connect.reload()
+  })
 })

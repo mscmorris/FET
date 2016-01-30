@@ -4,11 +4,35 @@
   <title>Fantasy Empire Toolkit</title>
   <link rel="stylesheet" href="css/angular-material.min.css">
   <link rel="stylesheet" href="css/angular-material.layouts.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
   <script src="dist.js"></script>
 </head>
 <body>
-  <div ng-view>
+  <div layout="column" ng-controller="AppController">
+    <md-toolbar>
+      <div class="md-toolbar-tools" ng-controller="ToolsController">
+        <md-button ng-click="openSideNav()">
+          <i class="fa fa-3x fa-bars"></i>
+        </md-button>
+      </div>
+    </md-toolbar>
     
+    <div layout="row">
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <span>Fantasy Empire Toolkit</span>
+          </div>
+        </md-toolbar>
+        <md-button>NFL</md-button>
+
+      </md-sidenav>
+      <md-content flex ng-view>
+    
+      </md-content>
+    </div>
+  
   </div>
 </body>
 </html>
